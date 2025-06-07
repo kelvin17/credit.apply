@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.loan.approve.repository.mapper.ApplyOrderMapper">
+
+    <!-- 插入 apply_order -->
+    <insert id="insertApplyOrder" parameterType="com.loan.approve.repository.ApplyOrderDAO" useGeneratedKeys="true" keyProperty="applyOrderId">
+        INSERT INTO apply_order (
+            apply_order_id,
+            user_id,
+            user_name,
+            status,
+            certificate_type,
+            certificate_id,
+            phone_number,
+            email,
+            create_time,
+            modify_time
+        ) VALUES (
+                     #{applyOrderId},
+                     #{userId},
+                     #{userName},
+                     #{status},
+                     #{certificateType},
+                     #{certificateID},
+                     #{phoneNumber},
+                     #{email},
+                     #{createTime},
+                     #{modifyTime}
+                 )
+    </insert>
+
+    <!-- 根据 user_id + certificate_type + certificate_id 查询 -->
+    <select id="selectByUserCertificate" resultType="com.loan.approve.repository.ApplyOrderDAO">
+        SELECT
+            apply_order_id,
+            user_id,
+            user_name,
+            status,
+            certificate_type,
+            certificate_id,
+            phone_number,
+            email,
+            create_time,
+            modify_time
+        FROM apply_order
+        WHERE user_name = #{userName}
+          AND certificate_type = #{certificateType}
+          AND certificate_id = #{certificateID}
+    </select>
+
+    <select id="selectByPhoneNumber" resultType="com.loan.approve.repository.ApplyOrderDAO">
+        SELECT
+            apply_order_id,
+            user_id,
+            user_name,
+            status,
+            certificate_type,
+            certificate_id,
+            phone_number,
+            email,
+            create_time,
+            modify_time
+        FROM apply_order
+        WHERE phone_number = #{phoneNumber}
+    </select>
+
+    <select id="selectByEmail" resultType="com.loan.approve.repository.ApplyOrderDAO">
+        SELECT
+            apply_order_id,
+            user_id,
+            user_name,
+            status,
+            certificate_type,
+            certificate_id,
+            phone_number,
+            email,
+            create_time,
+            modify_time
+        FROM apply_order
+        WHERE email = #{email}
+    </select>
+
+</mapper>

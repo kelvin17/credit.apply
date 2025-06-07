@@ -3,6 +3,7 @@ package com.loan.approve.api;
 import com.loan.approve.api.dto.ApprovalRequest;
 import com.loan.approve.api.dto.BaseResult;
 import com.loan.approve.api.dto.UserCreditInfoDTO;
+import com.loan.approve.model.CreditApplyOrder;
 import com.loan.approve.model.UserCreditAccount;
 import com.loan.approve.service.CreditApplyService;
 import com.loan.approve.service.CreditManageService;
@@ -29,7 +30,8 @@ public class ApprovalService {
     @PostMapping("/submit")
     public BaseResult<String> submitApproval(ApprovalRequest approvalRequest) {
         try {
-            String approvalID = creditApplyService.addNewApply(approvalRequest);
+            CreditApplyOrder creditApplyOrder = CreditApplyOrder.fromDTO(approvalRequest);
+            String approvalID = creditApplyService.addNewApply(creditApplyOrder);
             return BaseResult.success(approvalID);
         } catch (Exception e) {
             return BaseResult.fail("001", e.getMessage());
@@ -56,8 +58,8 @@ public class ApprovalService {
                 }
 
             } else {
-                String approvalId = creditApplyService.queryApprovalInfo(request.getUserName(), request.getCertificateType(), request.getCertificateID());
-                if (StringUtils.isBlank(approvalId)) {
+                CreditApplyOrder creditApplyOrder = creditApplyService.queryApprovalInfo(request.getUserName(), request.getCertificateType(), request.getCertificateID());
+                if (creditApplyOrder == null) {
                     dto.setApprovalStatus("NONE");
                 } else {
                     dto.setApprovalStatus("Processing");
