@@ -27,3 +27,12 @@ CREATE TABLE IF NOT EXISTS user_credit_account (
     UNIQUE KEY unique_user_cert (user_name, certificate_type, certificate_id)
 );
 
+CREATE TABLE IF NOT EXISTS data_collect_task (
+    task_id VARCHAR(100) NOT NULL PRIMARY KEY,
+    apply_order_id VARCHAR(100) NOT NULL,
+    user_name VARCHAR(100) NOT NULL,
+    data_item VARCHAR(100) NOT NULL,
+    status VARCHAR(16) NOT NULL,
+    create_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    modify_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);

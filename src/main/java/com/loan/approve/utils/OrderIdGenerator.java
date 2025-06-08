@@ -5,14 +5,19 @@ import java.util.Date;
 import java.util.Random;
 
 public class OrderIdGenerator {
-    public static String generate(String userName) {
+
+    public final static String APPROVAL = "APPROVAL";
+
+    public final static String DATA_COLLECT = "DATA_COLLECT";
+
+    public static String generate(String userName, String type) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
         String timestamp = sdf.format(new Date());
 
         String userPart = getLastNChars(userName, 4);
         String randomPart = generateRandomLetters(4);
 
-        return "APPROVAL" + timestamp + userPart + randomPart;
+        return type + timestamp + userPart + randomPart;
     }
 
     private static String getLastNChars(String input, int n) {
@@ -30,9 +35,5 @@ public class OrderIdGenerator {
             sb.append(chars.charAt(rnd.nextInt(chars.length())));
         }
         return sb.toString();
-    }
-
-    public static void main(String[] args) {
-        System.out.println(OrderIdGenerator.generate("Yanqing"));
     }
 }

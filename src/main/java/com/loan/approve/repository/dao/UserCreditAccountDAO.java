@@ -18,7 +18,7 @@ public class UserCreditAccountDAO {
     private double usedAmount;
     private String currency;
 
-    public static UserCreditAccount fromDAO(UserCreditAccountDAO userCreditAccountDAO) {
+    public static UserCreditAccount toDO(UserCreditAccountDAO userCreditAccountDAO) {
         if (userCreditAccountDAO == null) {
             return null;
         }

@@ -17,6 +17,13 @@ public interface ApplyOrderMapper {
             @Param("certificateID") String certificateID
     );
 
+    List<ApprovalOrderDAO> selectUnFinishedOrder(@Param("statuses") List<String> unFinishedStatusList);
+
+    ApprovalOrderDAO selectByOrderIdForUpdate(@Param("applyOrderId") String applyOrderId);
+
+    int updateStatus(@Param("status") String status, @Param("applyOrderId") String applyOrderId,
+                     @Param("oldStatus") String oldStatus);
+
     List<ApprovalOrderDAO> selectByPhoneNumber(
             @Param("phoneNumber") String phoneNumber
     );

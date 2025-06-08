@@ -14,7 +14,7 @@ public class CreditManageService {
 
     public UserCreditAccount queryUserCreditAccount(String username, String certificateType, String certificateNo) {
         UserCreditAccountDAO dao = userCreditAccountMapper.selectByUserCertificate(username, certificateType, certificateNo);
-        return UserCreditAccountDAO.fromDAO(dao);
+        return UserCreditAccountDAO.toDO(dao);
     }
 
 }

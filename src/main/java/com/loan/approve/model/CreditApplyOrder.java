@@ -29,7 +29,7 @@ public class CreditApplyOrder {
         creditApplyOrder.setPhoneNumber(request.getPhoneNumber());
         creditApplyOrder.setEmail(request.getEmail());
         creditApplyOrder.setStatus(ApplyStatus.INIT);
-        creditApplyOrder.setApplyOrderId(OrderIdGenerator.generate(request.getUserName()));
+        creditApplyOrder.setApplyOrderId(OrderIdGenerator.generate(request.getUserName(), OrderIdGenerator.APPROVAL));
         return creditApplyOrder;
     }
 }

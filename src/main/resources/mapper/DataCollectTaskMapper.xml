@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.loan.approve.repository.mapper.DataCollectTaskMapper">
+
+    <insert id="insertDataCollectTask" parameterType="com.loan.approve.repository.dao.DataCollectTaskDAO"
+            useGeneratedKeys="true" keyProperty="taskId">
+        INSERT INTO data_collect_task (task_id,
+                                       apply_order_id,
+                                       user_name,
+                                       data_item,
+                                       status,
+                                       create_time,
+                                       modify_time)
+        VALUES (#{taskId},
+                #{applyOrderId},
+                #{userName},
+                #{dataItem},
+                #{status},
+                NOW(),
+                NOW())
+    </insert>
+
+    <!-- 根据 user_id + certificate_type + certificate_id 查询 -->
+    <select id="selectUnFinishedByApplyOrderId" resultType="com.loan.approve.repository.dao.DataCollectTaskDAO">
+        SELECT task_id,
+               apply_order_id,
+               user_name,
+               data_item,
+               status,
+               create_time,
+               modify_time
+        FROM data_collect_task
+        WHERE apply_order_id = #{applyOrderId}
+          and status = #{status}
+    </select>
+
+    <update id="updateStatus" parameterType="map">
+        UPDATE data_collect_task
+        SET status      = #{status},
+            modify_time = NOW()
+        WHERE task_id = #{taskId}
+          and apply_order_id = #{applyOrderId}
+          and status = #{oldStatus}
+    </update>
+
+
+</mapper>

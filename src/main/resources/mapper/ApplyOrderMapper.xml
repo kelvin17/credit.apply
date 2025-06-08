@@ -5,74 +5,112 @@
 <mapper namespace="com.loan.approve.repository.mapper.ApplyOrderMapper">
 
     <!-- 插入 apply_order -->
-    <insert id="insertApplyOrder" parameterType="com.loan.approve.repository.dao.ApprovalOrderDAO" useGeneratedKeys="true" keyProperty="applyOrderId">
-        INSERT INTO apply_order (
-            apply_order_id,
-            user_name,
-            status,
-            certificate_type,
-            certificate_id,
-            phone_number,
-            email,
-            create_time,
-            modify_time
-        ) VALUES (
-                     #{applyOrderId},
-                     #{userName},
-                     #{status},
-                     #{certificateType},
-                     #{certificateID},
-                     #{phoneNumber},
-                     #{email},
-                     #{createTime},
-                     #{modifyTime}
-                 )
+    <insert id="insertApplyOrder" parameterType="com.loan.approve.repository.dao.ApprovalOrderDAO"
+            useGeneratedKeys="true" keyProperty="applyOrderId">
+        INSERT INTO apply_order (apply_order_id,
+                                 user_name,
+                                 status,
+                                 certificate_type,
+                                 certificate_id,
+                                 phone_number,
+                                 email,
+                                 create_time,
+                                 modify_time)
+        VALUES (#{applyOrderId},
+                #{userName},
+                #{status},
+                #{certificateType},
+                #{certificateID},
+                #{phoneNumber},
+                #{email},
+                #{createTime},
+                #{modifyTime})
     </insert>
 
     <!-- 根据 user_id + certificate_type + certificate_id 查询 -->
     <select id="selectByUserCertificate" resultType="com.loan.approve.repository.dao.ApprovalOrderDAO">
-        SELECT
-            apply_order_id,
-            user_name,
-            status,
-            certificate_type,
-            certificate_id,
-            phone_number,
-            email,
-            create_time,
-            modify_time
+        SELECT apply_order_id,
+               user_name,
+               status,
+               certificate_type,
+               certificate_id,
+               phone_number,
+               email,
+               create_time,
+               modify_time
         FROM apply_order
         WHERE user_name = #{userName}
           AND certificate_type = #{certificateType}
           AND certificate_id = #{certificateID}
     </select>
 
+    <select id="selectByOrderIdForUpdate" resultType="com.loan.approve.repository.dao.ApprovalOrderDAO">
+        SELECT apply_order_id,
+               user_name,
+               status,
+               certificate_type,
+               certificate_id,
+               phone_number,
+               email,
+               create_time,
+               modify_time
+        FROM apply_order
+        WHERE apply_order_id = #{applyOrderId}
+            for update
+    </select>
+
+    <update id="updateStatus" parameterType="map">
+        UPDATE apply_order
+        SET status      = #{status},
+            modify_time = NOW()
+        WHERE apply_order_id = #{applyOrderId}
+          and status = #{oldStatus}
+    </update>
+
+    <select id="selectUnFinishedOrder" resultType="com.loan.approve.repository.dao.ApprovalOrderDAO"
+            parameterType="java.util.List">
+        SELECT apply_order_id,
+        user_name,
+        status,
+        certificate_type,
+        certificate_id,
+        phone_number,
+        email,
+        create_time,
+        modify_time
+        FROM apply_order
+        WHERE status IN
+        <foreach item="status" collection="statuses" open="(" separator="," close=")">
+            #{status}
+        </foreach>
+        order by create_time
+        limit 50;
+    </select>
+
     <select id="selectByPhoneNumber" resultType="com.loan.approve.repository.dao.ApprovalOrderDAO">
-        SELECT
-            apply_order_id,
-            user_name,
-            status,
-            certificate_type,
-            certificate_id,
-            phone_number,
-            email,
-            create_time,
-            modify_time
+        SELECT apply_order_id,
+               user_name,
+               status,
+               certificate_type,
+               certificate_id,
+               phone_number,
+               email,
+               create_time,
+               modify_time
         FROM apply_order
         WHERE phone_number = #{phoneNumber}
     </select>
 
     <select id="selectByEmail" resultType="com.loan.approve.repository.dao.ApprovalOrderDAO">
-        SELECT
-            apply_order_id,
-            user_name,
-            status,
-            certificate_type,
-            certificate_id,
-            phone_number,
-            email,
-            create_time,
-            modify_time
+        SELECT apply_order_id,
+               user_name,
+               status,
+               certificate_type,
+               certificate_id,
+               phone_number,
+               email,
+               create_time,
+               modify_time
         FROM apply_order
         WHERE email = #{email}
     </select>
