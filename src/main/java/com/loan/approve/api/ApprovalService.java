@@ -45,24 +45,26 @@ public class ApprovalService {
             UserCreditInfoDTO dto = new UserCreditInfoDTO();
             if (userCreditAccount != null && dto.getValidDateEnd().after(new Date())) {
                 dto.setUserName(userCreditAccount.getUserName());
-                dto.setUserId(userCreditAccount.getUserId());
+                dto.setCertificateType(userCreditAccount.getCertificateTypeEnum().name());
+                dto.setCertificateNo(userCreditAccount.getCertificateId());
+
                 dto.setValidDateBegin(userCreditAccount.getValidDateBegin());
                 dto.setValidDateEnd(userCreditAccount.getValidDateEnd());
                 dto.setApprovalStatus("DONE");
                 if (userCreditAccount.isHasCreditQuota()) {
                     dto.setHasCreditQuota(true);
                     dto.setQuotaAmount(userCreditAccount.getQuotaAmount());
+                    dto.setUsedAmount(userCreditAccount.getUsedAmount());
                     dto.setCurrency(userCreditAccount.getCurrency());
                 } else {
                     dto.setHasCreditQuota(false);
                 }
-
             } else {
                 CreditApplyOrder creditApplyOrder = creditApplyService.queryApprovalInfo(request.getUserName(), request.getCertificateType(), request.getCertificateID());
                 if (creditApplyOrder == null) {
                     dto.setApprovalStatus("NONE");
                 } else {
-                    dto.setApprovalStatus("Processing");
+                    dto.setApprovalStatus("Processing, Phase:" + creditApplyOrder.getStatus().name());
                 }
             }
 

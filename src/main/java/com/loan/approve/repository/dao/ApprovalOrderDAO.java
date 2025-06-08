@@ -1,6 +1,7 @@
 package com.loan.approve.repository.dao;
 
 import com.loan.approve.model.CreditApplyOrder;
+import com.loan.approve.model.enums.ApplyStatus;
 import com.loan.approve.model.enums.CertificateTypeEnum;
 import lombok.Data;
 
@@ -10,11 +11,10 @@ import java.sql.Timestamp;
 public class ApprovalOrderDAO {
 
     private String applyOrderId;
-    //    private String userId;
     private String userName;
     private String status;
     private String certificateType;
-    private String certificateID;
+    private String certificateId;
     private String phoneNumber;
     private String email;
     private Timestamp createTime;
@@ -26,7 +26,7 @@ public class ApprovalOrderDAO {
         approvalOrderDAO.setUserName(applyOrder.getUserName());
         approvalOrderDAO.setStatus(applyOrder.getStatus().name());
         approvalOrderDAO.setCertificateType(applyOrder.getCertificateTypeEnum().name());
-        approvalOrderDAO.setCertificateID(applyOrder.getCertificateID());
+        approvalOrderDAO.setCertificateId(applyOrder.getCertificateID());
         approvalOrderDAO.setPhoneNumber(applyOrder.getPhoneNumber());
         approvalOrderDAO.setEmail(applyOrder.getEmail());
         approvalOrderDAO.setCreateTime(new Timestamp(System.currentTimeMillis()));
@@ -42,8 +42,9 @@ public class ApprovalOrderDAO {
         applyOrder.setApplyOrderId(dao.getApplyOrderId());
         applyOrder.setUserName(dao.getUserName());
         applyOrder.setCertificateTypeEnum(CertificateTypeEnum.valueOf(dao.getCertificateType()));
-        applyOrder.setCertificateID(dao.getCertificateID());
+        applyOrder.setCertificateID(dao.getCertificateId());
         applyOrder.setPhoneNumber(dao.getPhoneNumber());
+        applyOrder.setStatus(ApplyStatus.valueOf(dao.getStatus()));
         applyOrder.setEmail(dao.getEmail());
         return applyOrder;
     }

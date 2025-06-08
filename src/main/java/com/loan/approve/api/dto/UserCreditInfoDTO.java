@@ -12,8 +12,9 @@ import java.util.Date;
 @AllArgsConstructor
 public class UserCreditInfoDTO {
 
-    private String userId;
     private String userName;
+    private String certificateType;
+    private String certificateNo;
     @Schema(description = "approvalStatus: None, Processing, DONE")
     private String approvalStatus;
     private boolean hasCreditQuota;

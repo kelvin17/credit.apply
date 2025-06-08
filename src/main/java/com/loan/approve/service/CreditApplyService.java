@@ -22,8 +22,8 @@ public class CreditApplyService {
         return approvalOrderDAO.getApplyOrderId();
     }
 
-    public CreditApplyOrder queryApprovalInfo(String username, String certificateNo, String certificateType) {
-        List<ApprovalOrderDAO> approvalOrderDAOList = applyOrderMapper.selectByUserCertificate(username, certificateNo, certificateType);
+    public CreditApplyOrder queryApprovalInfo(String username, String certificateType, String certificateNo) {
+        List<ApprovalOrderDAO> approvalOrderDAOList = applyOrderMapper.selectByUserCertificate(username, certificateType, certificateNo);
         //get the newest record. And make sure there is only one valid approval order at one time in other way.
         Optional<ApprovalOrderDAO> latestOrder = approvalOrderDAOList.stream()
                 .max(Comparator.comparing(ApprovalOrderDAO::getCreateTime));

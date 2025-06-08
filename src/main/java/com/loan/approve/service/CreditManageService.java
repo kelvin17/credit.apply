@@ -12,14 +12,9 @@ public class CreditManageService {
     @Autowired
     private UserCreditAccountMapper userCreditAccountMapper;
 
-    public UserCreditAccount queryUserCreditAccount(String username, String certificateNo, String certificateType) {
-        UserCreditAccount userCreditAccount = new UserCreditAccount();
-        UserCreditAccountDAO dao = userCreditAccountMapper.selectByUserCertificate(username, certificateNo, certificateType);
-        if (dao != null) {
-
-        }
-        //todo query from db
-        return userCreditAccount;
+    public UserCreditAccount queryUserCreditAccount(String username, String certificateType, String certificateNo) {
+        UserCreditAccountDAO dao = userCreditAccountMapper.selectByUserCertificate(username, certificateType, certificateNo);
+        return UserCreditAccountDAO.fromDAO(dao);
     }
 
 }
