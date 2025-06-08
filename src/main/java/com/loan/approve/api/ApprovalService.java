@@ -8,9 +8,9 @@ import com.loan.approve.model.UserCreditAccount;
 import com.loan.approve.service.CreditApplyService;
 import com.loan.approve.service.CreditManageService;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,18 +28,18 @@ public class ApprovalService {
     private CreditManageService creditManageService;
 
     @PostMapping("/submit")
-    public BaseResult<String> submitApproval(ApprovalRequest approvalRequest) {
+    public BaseResult<String> submitApproval(@RequestBody ApprovalRequest approvalRequest) {
         try {
             CreditApplyOrder creditApplyOrder = CreditApplyOrder.fromDTO(approvalRequest);
             String approvalID = creditApplyService.addNewApply(creditApplyOrder);
             return BaseResult.success(approvalID);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             return BaseResult.fail("001", e.getMessage());
         }
     }
 
     @PostMapping("/query")
-    public BaseResult<UserCreditInfoDTO> queryProgress(ApprovalRequest request) {
+    public BaseResult<UserCreditInfoDTO> queryProgress(@RequestBody ApprovalRequest request) {
         try {
             UserCreditAccount userCreditAccount = creditManageService.queryUserCreditAccount(request.getUserName(), request.getCertificateType(), request.getCertificateID());
             UserCreditInfoDTO dto = new UserCreditInfoDTO();
@@ -67,7 +67,7 @@ public class ApprovalService {
             }
 
             return BaseResult.success(dto);
-        } catch (Exception e) {
+        } catch (Throwable e) {
             return BaseResult.fail("001", e.getMessage());
         }
     }

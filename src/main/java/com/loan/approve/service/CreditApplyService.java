@@ -1,13 +1,14 @@
 package com.loan.approve.service;
 
 import com.loan.approve.model.CreditApplyOrder;
-import com.loan.approve.repository.ApplyOrderDAO;
-import com.loan.approve.repository.ApplyOrderMapper;
+import com.loan.approve.repository.mapper.ApplyOrderMapper;
+import com.loan.approve.repository.dao.ApprovalOrderDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CreditApplyService {
@@ -16,18 +17,17 @@ public class CreditApplyService {
     private ApplyOrderMapper applyOrderMapper;
 
     public String addNewApply(CreditApplyOrder creditApplyOrder) {
-        ApplyOrderDAO applyOrderDAO = ApplyOrderDAO.fromDO(creditApplyOrder);
-        applyOrderMapper.insertApplyOrder(applyOrderDAO);
-        return applyOrderDAO.getApplyOrderId();
+        ApprovalOrderDAO approvalOrderDAO = ApprovalOrderDAO.fromDO(creditApplyOrder);
+        applyOrderMapper.insertApplyOrder(approvalOrderDAO);
+        return approvalOrderDAO.getApplyOrderId();
     }
 
     public CreditApplyOrder queryApprovalInfo(String username, String certificateNo, String certificateType) {
-        List<ApplyOrderDAO> applyOrderDAOList = applyOrderMapper.selectByUserCertificate(username, certificateNo, certificateType);
-        if (CollectionUtils.isEmpty(applyOrderDAOList)) {
-            return null;
-        }
-        //todo sort by time
-//        applyOrderDAOList.sort(k->k.getCreateTime());
-        return ApplyOrderDAO.toDO(applyOrderDAOList.get(0));
+        List<ApprovalOrderDAO> approvalOrderDAOList = applyOrderMapper.selectByUserCertificate(username, certificateNo, certificateType);
+        //get the newest record. And make sure there is only one valid approval order at one time in other way.
+        Optional<ApprovalOrderDAO> latestOrder = approvalOrderDAOList.stream()
+                .max(Comparator.comparing(ApprovalOrderDAO::getCreateTime));
+
+        return ApprovalOrderDAO.toDO(latestOrder.orElse(null));
     }
 }

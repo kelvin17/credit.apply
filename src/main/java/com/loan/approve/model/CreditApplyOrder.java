@@ -3,17 +3,17 @@ package com.loan.approve.model;
 import com.loan.approve.api.dto.ApprovalRequest;
 import com.loan.approve.model.enums.ApplyStatus;
 import com.loan.approve.model.enums.CertificateTypeEnum;
+import com.loan.approve.utils.OrderIdGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.BeanUtils;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreditApplyOrder {
     private String applyOrderId;
-    private String userId;
+    //    private String userId;
     private ApplyStatus status;
     private String userName;
     private CertificateTypeEnum certificateTypeEnum;
@@ -23,11 +23,13 @@ public class CreditApplyOrder {
 
     public static CreditApplyOrder fromDTO(ApprovalRequest request) {
         CreditApplyOrder creditApplyOrder = new CreditApplyOrder();
-        BeanUtils.copyProperties(request, creditApplyOrder);
+        creditApplyOrder.setUserName(request.getUserName());
         creditApplyOrder.setCertificateTypeEnum(CertificateTypeEnum.valueOf(request.getCertificateType()));
+        creditApplyOrder.setCertificateID(request.getCertificateID());
+        creditApplyOrder.setPhoneNumber(request.getPhoneNumber());
+        creditApplyOrder.setEmail(request.getEmail());
         creditApplyOrder.setStatus(ApplyStatus.INIT);
-        //todo UUID工具
-        creditApplyOrder.setApplyOrderId("");
+        creditApplyOrder.setApplyOrderId(OrderIdGenerator.generate(request.getUserName()));
         return creditApplyOrder;
     }
 }

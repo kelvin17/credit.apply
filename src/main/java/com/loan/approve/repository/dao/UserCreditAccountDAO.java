@@ -1,4 +1,4 @@
-package com.loan.approve.repository;
+package com.loan.approve.repository.dao;
 
 import lombok.Data;
 

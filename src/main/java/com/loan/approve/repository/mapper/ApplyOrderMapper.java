@@ -1,5 +1,6 @@
-package com.loan.approve.repository;
+package com.loan.approve.repository.mapper;
 
+import com.loan.approve.repository.dao.ApprovalOrderDAO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -8,19 +9,19 @@ import java.util.List;
 @Mapper
 public interface ApplyOrderMapper {
 
-    void insertApplyOrder(ApplyOrderDAO orderDAO);
+    int insertApplyOrder(ApprovalOrderDAO orderDAO);
 
-    List<ApplyOrderDAO> selectByUserCertificate(
+    List<ApprovalOrderDAO> selectByUserCertificate(
             @Param("userName") String userName,
             @Param("certificateType") String certificateType,
             @Param("certificateID") String certificateID
     );
 
-    List<ApplyOrderDAO> selectByPhoneNumber(
+    List<ApprovalOrderDAO> selectByPhoneNumber(
             @Param("phoneNumber") String phoneNumber
     );
 
-    List<ApplyOrderDAO> selectByEmail(
+    List<ApprovalOrderDAO> selectByEmail(
             @Param("email") String email
     );
 

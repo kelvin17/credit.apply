@@ -2,13 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.loan.approve.repository.mapper.ApplyOrderMapper">
+<mapper namespace="com.loan.approve.repository.mapper.UserCreditAccountMapper">
 
     <!-- 插入 apply_order -->
-    <insert id="insertOrUpdateUserCreditAccount" parameterType="com.loan.approve.repository.UserCreditAccountDAO" useGeneratedKeys="true" keyProperty="user_id">
+    <insert id="insertOrUpdateUserCreditAccount" parameterType="com.loan.approve.repository.dao.UserCreditAccountDAO" useGeneratedKeys="true" keyProperty="user_name,certificate_type,certificate_id">
         INSERT INTO user_credit_account (
-             user_id,
              user_name,
+             certificate_type,
+             certificate_id,
              has_credit_quota,
              valid_date_begin,
              valid_date_end,
@@ -16,8 +17,9 @@
              used_amount,
              currency)
         VALUES (
-                #{userId},
                 #{userName},
+                #{certificateType},
+                #{certificateId},
                 #{hasCreditQuota},
                 #{validDateBegin},
                 #{validDateEnd},
@@ -27,6 +29,8 @@
         )
         ON DUPLICATE KEY UPDATE
             user_name = VALUES (user_name),
+            certificate_type = VALUES (certificate_type),
+            certificate_id = VALUES (certificate_id),
             has_credit_quota = VALUES (has_credit_quota),
             valid_date_begin = VALUES (valid_date_begin),
             valid_date_end = VALUES (valid_date_end),
@@ -36,10 +40,11 @@
     </insert>
 
     <!-- 根据 user_id + certificate_type + certificate_id 查询 -->
-    <select id="selectByUserCertificate" resultType="com.loan.approve.repository.UserCreditAccountDAO">
+    <select id="selectByUserCertificate" resultType="com.loan.approve.repository.dao.UserCreditAccountDAO">
         SELECT
-            user_id,
             user_name,
+            certificate_type,
+            certificate_id,
             has_credit_quota,
             valid_date_begin,
             valid_date_end,

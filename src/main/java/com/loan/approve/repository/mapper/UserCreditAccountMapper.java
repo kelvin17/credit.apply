@@ -1,9 +1,8 @@
-package com.loan.approve.repository;
+package com.loan.approve.repository.mapper;
 
+import com.loan.approve.repository.dao.UserCreditAccountDAO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-import java.util.List;
 
 @Mapper
 public interface UserCreditAccountMapper {

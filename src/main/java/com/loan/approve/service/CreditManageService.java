@@ -1,8 +1,8 @@
 package com.loan.approve.service;
 
 import com.loan.approve.model.UserCreditAccount;
-import com.loan.approve.repository.UserCreditAccountDAO;
-import com.loan.approve.repository.UserCreditAccountMapper;
+import com.loan.approve.repository.dao.UserCreditAccountDAO;
+import com.loan.approve.repository.mapper.UserCreditAccountMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

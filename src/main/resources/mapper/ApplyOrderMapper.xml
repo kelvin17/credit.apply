@@ -5,10 +5,9 @@
 <mapper namespace="com.loan.approve.repository.mapper.ApplyOrderMapper">
 
     <!-- 插入 apply_order -->
-    <insert id="insertApplyOrder" parameterType="com.loan.approve.repository.ApplyOrderDAO" useGeneratedKeys="true" keyProperty="applyOrderId">
+    <insert id="insertApplyOrder" parameterType="com.loan.approve.repository.dao.ApprovalOrderDAO" useGeneratedKeys="true" keyProperty="applyOrderId">
         INSERT INTO apply_order (
             apply_order_id,
-            user_id,
             user_name,
             status,
             certificate_type,
@@ -19,7 +18,6 @@
             modify_time
         ) VALUES (
                      #{applyOrderId},
-                     #{userId},
                      #{userName},
                      #{status},
                      #{certificateType},
@@ -32,10 +30,9 @@
     </insert>
 
     <!-- 根据 user_id + certificate_type + certificate_id 查询 -->
-    <select id="selectByUserCertificate" resultType="com.loan.approve.repository.ApplyOrderDAO">
+    <select id="selectByUserCertificate" resultType="com.loan.approve.repository.dao.ApprovalOrderDAO">
         SELECT
             apply_order_id,
-            user_id,
             user_name,
             status,
             certificate_type,
@@ -50,10 +47,9 @@
           AND certificate_id = #{certificateID}
     </select>
 
-    <select id="selectByPhoneNumber" resultType="com.loan.approve.repository.ApplyOrderDAO">
+    <select id="selectByPhoneNumber" resultType="com.loan.approve.repository.dao.ApprovalOrderDAO">
         SELECT
             apply_order_id,
-            user_id,
             user_name,
             status,
             certificate_type,
@@ -66,10 +62,9 @@
         WHERE phone_number = #{phoneNumber}
     </select>
 
-    <select id="selectByEmail" resultType="com.loan.approve.repository.ApplyOrderDAO">
+    <select id="selectByEmail" resultType="com.loan.approve.repository.dao.ApprovalOrderDAO">
         SELECT
             apply_order_id,
-            user_id,
             user_name,
             status,
             certificate_type,
