@@ -2,21 +2,29 @@ package com.loan.approve.service;
 
 import com.loan.approve.model.CreditApplyOrder;
 import com.loan.approve.model.DataCollectTask;
+import com.loan.approve.model.UserCreditAccount;
 import com.loan.approve.model.enums.ApplyStatus;
 import com.loan.approve.model.enums.DataCollectTaskStatus;
 import com.loan.approve.model.enums.DataItemName;
 import com.loan.approve.repository.dao.ApprovalOrderDAO;
 import com.loan.approve.repository.dao.DataCollectTaskDAO;
+import com.loan.approve.repository.dao.UserCreditAccountDAO;
 import com.loan.approve.repository.mapper.ApplyOrderMapper;
 import com.loan.approve.repository.mapper.DataCollectTaskMapper;
+import com.loan.approve.repository.mapper.UserCreditAccountMapper;
 import com.loan.approve.utils.OrderIdGenerator;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.javamoney.moneta.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.money.CurrencyUnit;
+import javax.money.Monetary;
+import javax.money.MonetaryAmount;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +36,9 @@ public class ApprovalTaskWorker {
 
     @Autowired
     private DataCollectTaskMapper dataCollectTaskMapper;
+
+    @Autowired
+    private UserCreditAccountMapper userCreditAccountMapper;
 
     @Async("statusFlowingExecutor")
     @Transactional
@@ -86,10 +97,34 @@ public class ApprovalTaskWorker {
         if (StringUtils.equals(approvalOrderDAO.getStatus(), creditApplyOrder.getStatus().name())) {
             //2. invoke the approval service - mock - todo add a server
             boolean finishApproval = true;
+            UserCreditAccount userCreditAccount = mockResult(creditApplyOrder, finishApproval);
+            UserCreditAccountDAO userCreditAccountDAO = UserCreditAccountDAO.fromDO(userCreditAccount);
+            userCreditAccountMapper.insertOrUpdateUserCreditAccount(userCreditAccountDAO);
+
             if (finishApproval) {
                 applyOrderMapper.updateStatus(creditApplyOrder.getStatus().next, creditApplyOrder.getApplyOrderId(), creditApplyOrder.getStatus().current);
             }
         }
+    }
 
+    private UserCreditAccount mockResult(CreditApplyOrder creditApplyOrder, boolean mockApproval) {
+        UserCreditAccount userCreditAccount = new UserCreditAccount();
+        userCreditAccount.setUserName(creditApplyOrder.getUserName());
+        userCreditAccount.setCertificateTypeEnum(creditApplyOrder.getCertificateTypeEnum());
+        userCreditAccount.setCertificateId(creditApplyOrder.getCertificateId());
+        userCreditAccount.setHasCreditQuota(mockApproval);
+
+        if (mockApproval) {
+            CurrencyUnit currency = Monetary.getCurrency("DKK");
+            MonetaryAmount amount = Money.of(10000.00, currency);
+
+            userCreditAccount.setCurrency(currency.toString());
+            userCreditAccount.setQuotaAmount(amount.getNumber().numberValueExact(BigDecimal.class));
+            userCreditAccount.setUsedAmount(BigDecimal.ZERO);
+        }
+
+        userCreditAccount.setValidDateBegin(new Date());
+        userCreditAccount.setValidDateEnd(DateUtils.addDays(new Date(), 365));
+        return userCreditAccount;
     }
 }

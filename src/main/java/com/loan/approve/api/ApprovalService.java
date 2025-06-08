@@ -43,7 +43,7 @@ public class ApprovalService {
         try {
             UserCreditAccount userCreditAccount = creditManageService.queryUserCreditAccount(request.getUserName(), request.getCertificateType(), request.getCertificateID());
             UserCreditInfoDTO dto = new UserCreditInfoDTO();
-            if (userCreditAccount != null && dto.getValidDateEnd().after(new Date())) {
+            if (userCreditAccount != null && userCreditAccount.getValidDateEnd().after(new Date())) {
                 dto.setUserName(userCreditAccount.getUserName());
                 dto.setCertificateType(userCreditAccount.getCertificateTypeEnum().name());
                 dto.setCertificateNo(userCreditAccount.getCertificateId());

@@ -26,7 +26,7 @@ public class ApprovalOrderDAO {
         approvalOrderDAO.setUserName(applyOrder.getUserName());
         approvalOrderDAO.setStatus(applyOrder.getStatus().name());
         approvalOrderDAO.setCertificateType(applyOrder.getCertificateTypeEnum().name());
-        approvalOrderDAO.setCertificateId(applyOrder.getCertificateID());
+        approvalOrderDAO.setCertificateId(applyOrder.getCertificateId());
         approvalOrderDAO.setPhoneNumber(applyOrder.getPhoneNumber());
         approvalOrderDAO.setEmail(applyOrder.getEmail());
         approvalOrderDAO.setCreateTime(new Timestamp(System.currentTimeMillis()));
@@ -42,7 +42,7 @@ public class ApprovalOrderDAO {
         applyOrder.setApplyOrderId(dao.getApplyOrderId());
         applyOrder.setUserName(dao.getUserName());
         applyOrder.setCertificateTypeEnum(CertificateTypeEnum.valueOf(dao.getCertificateType()));
-        applyOrder.setCertificateID(dao.getCertificateId());
+        applyOrder.setCertificateId(dao.getCertificateId());
         applyOrder.setPhoneNumber(dao.getPhoneNumber());
         applyOrder.setStatus(ApplyStatus.valueOf(dao.getStatus()));
         applyOrder.setEmail(dao.getEmail());

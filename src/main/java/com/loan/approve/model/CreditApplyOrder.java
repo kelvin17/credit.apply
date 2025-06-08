@@ -17,7 +17,7 @@ public class CreditApplyOrder {
     private ApplyStatus status;
     private String userName;
     private CertificateTypeEnum certificateTypeEnum;
-    private String certificateID;
+    private String certificateId;
     private String phoneNumber;
     private String email;
 
@@ -25,7 +25,7 @@ public class CreditApplyOrder {
         CreditApplyOrder creditApplyOrder = new CreditApplyOrder();
         creditApplyOrder.setUserName(request.getUserName());
         creditApplyOrder.setCertificateTypeEnum(CertificateTypeEnum.valueOf(request.getCertificateType()));
-        creditApplyOrder.setCertificateID(request.getCertificateID());
+        creditApplyOrder.setCertificateId(request.getCertificateID());
         creditApplyOrder.setPhoneNumber(request.getPhoneNumber());
         creditApplyOrder.setEmail(request.getEmail());
         creditApplyOrder.setStatus(ApplyStatus.INIT);
