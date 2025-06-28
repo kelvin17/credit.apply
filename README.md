@@ -11,6 +11,7 @@ login on the terminal
 ## 2. start redis[optional]
 
 ## 3. start application
+    com.loan.approve.ApprovalApplication.main
 
 ## 4. visit URL using swigger
 ```
