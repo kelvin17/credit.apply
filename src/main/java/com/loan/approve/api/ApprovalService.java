@@ -30,10 +30,15 @@ public class ApprovalService {
     @PostMapping("/submit")
     public BaseResult<String> submitApproval(@RequestBody ApprovalRequest approvalRequest) {
         try {
+            System.out.printf("new submitApproval, userName=%s, userProfileID:%s\n", approvalRequest.getUserName(),
+                    approvalRequest.getCertificateID());
             CreditApplyOrder creditApplyOrder = CreditApplyOrder.fromDTO(approvalRequest);
             String approvalID = creditApplyService.addNewApply(creditApplyOrder);
+            System.out.printf("new submitApproval end, approvalID=%s\n", approvalID);
             return BaseResult.success(approvalID);
         } catch (Throwable e) {
+            e.printStackTrace();
+            System.err.printf("new submitApproval exception, error: %s\n", e.getMessage());
             return BaseResult.fail("001", e.getMessage());
         }
     }
@@ -41,6 +46,7 @@ public class ApprovalService {
     @PostMapping("/query")
     public BaseResult<UserCreditInfoDTO> queryProgress(@RequestBody ApprovalRequest request) {
         try {
+            System.out.printf("new query, userName=%s\n", request.getUserName());
             UserCreditAccount userCreditAccount = creditManageService.queryUserCreditAccount(request.getUserName(), request.getCertificateType(), request.getCertificateID());
             UserCreditInfoDTO dto = new UserCreditInfoDTO();
             if (userCreditAccount != null && userCreditAccount.getValidDateEnd().after(new Date())) {
@@ -64,12 +70,18 @@ public class ApprovalService {
                 if (creditApplyOrder == null) {
                     dto.setApprovalStatus("NONE");
                 } else {
+                    dto.setUserName(creditApplyOrder.getUserName());
+                    dto.setCertificateType(creditApplyOrder.getCertificateTypeEnum().name());
+                    dto.setCertificateNo(creditApplyOrder.getCertificateId());
                     dto.setApprovalStatus("Processing, Phase:" + creditApplyOrder.getStatus().name());
                 }
             }
 
+            System.out.printf("new query end, userName=%s\n", dto);
             return BaseResult.success(dto);
         } catch (Throwable e) {
+            e.printStackTrace();
+            System.err.printf("new query exception, error: %s\n", e.getMessage());
             return BaseResult.fail("001", e.getMessage());
         }
     }

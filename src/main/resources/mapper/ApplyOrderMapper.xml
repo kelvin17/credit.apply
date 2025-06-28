@@ -20,7 +20,7 @@
                 #{userName},
                 #{status},
                 #{certificateType},
-                #{certificateID},
+                #{certificateId},
                 #{phoneNumber},
                 #{email},
                 #{createTime},
@@ -41,7 +41,7 @@
         FROM apply_order
         WHERE user_name = #{userName}
           AND certificate_type = #{certificateType}
-          AND certificate_id = #{certificateID}
+          AND certificate_id = #{certificateId}
     </select>
 
     <select id="selectByOrderIdForUpdate" resultType="com.loan.approve.repository.dao.ApprovalOrderDAO">

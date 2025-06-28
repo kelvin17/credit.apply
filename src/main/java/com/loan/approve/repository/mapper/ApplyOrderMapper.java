@@ -14,7 +14,7 @@ public interface ApplyOrderMapper {
     List<ApprovalOrderDAO> selectByUserCertificate(
             @Param("userName") String userName,
             @Param("certificateType") String certificateType,
-            @Param("certificateID") String certificateID
+            @Param("certificateId") String certificateID
     );
 
     List<ApprovalOrderDAO> selectUnFinishedOrder(@Param("statuses") List<String> unFinishedStatusList);
