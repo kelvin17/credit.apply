@@ -42,4 +42,4 @@ http://localhost:9090/swagger-ui/index.html
 ```
 
 # System Design
-![creditApply.png](../../draw/creditApply.png)
+![system design](images/creditApply.png)
