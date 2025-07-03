@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      IMAGE_TAG: ${{ github.run_number }}
 
     steps:
     #step 1: checkout repository
@@ -49,8 +51,8 @@ jobs:
 
     #step 4: build image and tag it
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag ${{ secrets.ACR_LOGIN_SERVER }}/loanapply-springboot-app:$(date +%s)
+      run: docker build . --file Dockerfile --tag ${{ secrets.ACR_LOGIN_SERVER }}/loanapply-springboot-app:${{ env.IMAGE_TAG}}
 
     #step 5: push image to ACR
     - name: Push image to ACR
-      run: docker push ${{ secrets.ACR_LOGIN_SERVER }}/loanapply-springboot-app:$(date +%s)
+      run: docker push ${{ secrets.ACR_LOGIN_SERVER }}/loanapply-springboot-app:${{ env.IMAGE_TAG}}
