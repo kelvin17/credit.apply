@@ -1,0 +1,38 @@
+name: CI/CD-Build Docker Image, push it to ACR
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    #step 1: checkout repository
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    #step 2: login to AZure
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    #step 3: login to ACR
+    - name: Login to ACR
+      uses: azure/docker-login@v1
+      with:
+        login-server: ${{ secrets.ACR_LOGIN_SERVER }}
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+
+    #step 4: build image and tag it
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag ${{ secrets.ACR_LOGIN_SERVER }}/loanapply-springboot-app:$(date +%s)
+
+    #step 5: push image to ACR
+    - name: Push image to ACR
+      run: docker push ${{ secrets.ACR_LOGIN_SERVER }}/loanapply-springboot-app:$(date +%s)
