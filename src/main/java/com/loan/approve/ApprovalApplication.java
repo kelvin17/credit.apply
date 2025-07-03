@@ -10,7 +10,7 @@ public class ApprovalApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ApprovalApplication.class, args);
-        System.out.println("Credit Loan Approval Application Started");
+        System.out.println("Credit Loan Approval Application Started - just test the automatic pipeline");
     }
 
 }
