@@ -14,11 +14,12 @@ development relied on internal platforms and direct use of open-source tools was
 
 ## DevOps
 - GitHub for code hosting
-- CI/CD pipeline that builds and packages container images
+- GitHub Action for CI/CD pipeline that builds and packages container images, and pushing image to ACR
 
-## Future plans
+## Todo
 - Implement automated Kubernetes deployment using Helm and Argo CD for multi-region disaster recovery
 - Integrate Prometheus and Grafana for enhanced observability and monitoring
+- Test Framework: Junit + Mockito + Spring Boot Test
 
 Additionally, this project serves as a portfolio piece to demonstrate my comprehensive understanding and experience in software engineering, aiming to support my pursuit of freelance opportunities.
 
@@ -32,6 +33,11 @@ login on the terminal
   mysql -u root -p
 ```
 
+## 2. create database and table
+1. sql for creating table you can find in src/main/resources/schema.sql
+2. modify the JDBC config:
+
+
 ## 2. start redis[optional]
 
 ## 3. start application
@@ -39,8 +45,14 @@ login on the terminal
 
 ## 4. visit URL using swigger
 ```
-http://localhost:9090/swagger-ui/index.html
+http://localhost:8080/swagger-ui/index.html
 ```
+
+I also have developed this server on Azure, you can have a quick look here:
+```url
+https://creditapply-fmfwf3g8b5bucqde.swedencentral-01.azurewebsites.net/swagger-ui/index.html
+```
+
 
 # System Design
 ![system design](images/creditApply.png)
