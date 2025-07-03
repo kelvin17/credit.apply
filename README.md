@@ -1,5 +1,6 @@
 # Project Purpose
-With over 9 years of experience as a software developer in a Chinese internet company, where most development relied on internal platforms and direct use of open-source tools was limited, I built this demo loan credit application system to combine my work experience with modern open-source frameworks and DevOps practices.
+With over 9 years of experience as a software developer in one of China’s leading internet companies, where most 
+development relied on internal platforms and direct use of open-source tools was limited, I built this demo loan credit application system to combine my work experience with modern open-source frameworks and DevOps practices.
 
 ## Development stack
 - Spring Boot
