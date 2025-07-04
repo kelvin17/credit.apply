@@ -1,6 +1,6 @@
 # 1. Project Purpose
-With over 9 years of experience as a software developer in one of China’s leading internet companies, where most 
-development relied on internal platforms and direct use of open-source tools was limited, I built this demo loan credit application system to combine my work experience with modern open-source frameworks and DevOps practices.
+With over 9 years of experience as a software developer in a company, where most 
+development relied on internal platforms, and direct use of open-source tools was limited, I built this demo loan credit application system to combine my work experience with modern open-source frameworks and DevOps practices.
 
 ### 1.1 Development stack
 - Spring Boot
@@ -57,7 +57,7 @@ https://creditapply-fmfwf3g8b5bucqde.swedencentral-01.azurewebsites.net/swagger-
 # 3. System Design
 This system is part of the overall loan business domain, focusing specifically on people applying for a credit limit. 
 The brief pipeline is as follows: 
-First, users submit their application and sign an agreement authorizing the bank or service provider to collect and verify their information. 
+First, users submit their application and sign an agreement authorising the bank or service provider to collect and verify their information. 
 Second, the bank or service provider gathers this information through various methods. 
 Third, the bank or service provider reviews and approves the application based on the applicant’s information. 
 Nowadays, the approval step is mostly driven by a credit scoring model, which has been trained on large amounts of data.
