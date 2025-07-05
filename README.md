@@ -27,11 +27,11 @@ Additionally, this project serves as a portfolio piece to demonstrate my compreh
 # 2. Play with this system
 ### 2.1 start mysql
 ```shell
-brew services start mysql
-brew services stop mysql
-
+brew services start MySQL
+```
 login on the terminal
-  mysql -u root -p
+```
+mysql -u root -p
 ```
 
 ### 2.2 create database and table
