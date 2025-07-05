@@ -6,7 +6,7 @@ development relied on internal platforms, and direct use of open-source tools wa
 - Spring Boot
 - MyBatis with MySQL
 - Redis for distributed locking
-- Swagger for API documentation
+- Swagger for API documentation and Visit
 
 ### 1.2 Infrastructure (IaaS)
 - Azure managed services for MySQL and Redis to reduce infrastructure maintenance
