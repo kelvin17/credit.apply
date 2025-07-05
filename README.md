@@ -48,11 +48,6 @@ login on the terminal
 http://localhost:8080/swagger-ui/index.html
 ```
 
-I also have deployed this server on Azure, you can have a quick look here:
-```url
-https://creditapply-fmfwf3g8b5bucqde.swedencentral-01.azurewebsites.net/swagger-ui/index.html
-```
-
 
 # 3. System Design
 This system is part of the overall loan business domain, focusing specifically on people applying for a credit limit. 
