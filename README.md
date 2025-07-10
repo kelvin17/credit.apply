@@ -1,12 +1,12 @@
 # 1. Project Purpose
-With over 9 years of experience as a software developer in one of China’s leading internet companies, where most 
-development relied on internal platforms and direct use of open-source tools was limited, I built this demo loan credit application system to combine my work experience with modern open-source frameworks and DevOps practices.
+With over 9 years of experience as a software developer in a company, where most 
+development relied on internal platforms, and direct use of open-source tools was limited, I built this demo loan credit application system to combine my work experience with modern open-source frameworks and DevOps practices.
 
 ### 1.1 Development stack
 - Spring Boot
 - MyBatis with MySQL
 - Redis for distributed locking
-- Swagger for API documentation
+- Swagger for API documentation and Visit
 
 ### 1.2 Infrastructure (IaaS)
 - Azure managed services for MySQL and Redis to reduce infrastructure maintenance
@@ -27,11 +27,11 @@ Additionally, this project serves as a portfolio piece to demonstrate my compreh
 # 2. Play with this system
 ### 2.1 start mysql
 ```shell
-brew services start mysql
-brew services stop mysql
-
+brew services start MySQL
+```
 login on the terminal
-  mysql -u root -p
+```
+mysql -u root -p
 ```
 
 ### 2.2 create database and table
@@ -48,16 +48,11 @@ login on the terminal
 http://localhost:8080/swagger-ui/index.html
 ```
 
-I also have deployed this server on Azure, you can have a quick look here:
-```url
-https://creditapply-fmfwf3g8b5bucqde.swedencentral-01.azurewebsites.net/swagger-ui/index.html
-```
-
 
 # 3. System Design
 This system is part of the overall loan business domain, focusing specifically on people applying for a credit limit. 
 The brief pipeline is as follows: 
-First, users submit their application and sign an agreement authorizing the bank or service provider to collect and verify their information. 
+First, users submit their application and sign an agreement authorising the bank or service provider to collect and verify their information. 
 Second, the bank or service provider gathers this information through various methods. 
 Third, the bank or service provider reviews and approves the application based on the applicant’s information. 
 Nowadays, the approval step is mostly driven by a credit scoring model, which has been trained on large amounts of data.
